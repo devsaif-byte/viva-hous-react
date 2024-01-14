@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+*.yarn
+.yarnrc.yml
+*prettier
+.prettierignore
 
 # Editor directories and files
 .vscode/*
