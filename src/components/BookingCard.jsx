@@ -1,33 +1,47 @@
 import { Badge, Button } from 'flowbite-react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const BookingCard = () => {
+const BookingCard = ({ type, status, price, area, description }) => {
+  const navigate = useNavigate();
   return (
-    <div className="mx-auto p-6">
+    <div className=" relative mx-auto min-w-80 border bg-white p-6 md:fixed">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Price:</h2>
-        <Badge>For Sale</Badge>
+        {status === 'For Sale' ? (
+          <Badge className="inline-block" color="success">
+            {status}
+          </Badge>
+        ) : status === 'For Rent' ? (
+          <Badge className="inline-block" color="warning">
+            {status}
+          </Badge>
+        ) : null}
       </div>
       <div className="mb-6">
-        <p className="text-4xl font-bold text-rose-600">$45,231</p>
+        <p className="text-4xl font-bold text-rose-600">${price}</p>
       </div>
       <div className="mb-6 grid grid-cols-2 gap-4">
         <div>
-          <p className="text-sm text-gray-600">Days on Hously</p>
-          <p className="font-semibold">124 Days</p>
+          <p className="text-sm text-gray-600">Area</p>
+          <p className="font-semibold">{area} SQF</p>
         </div>
         <div>
-          <p className="text-sm text-gray-600">Price per sq ft</p>
-          <p className="font-semibold">$186</p>
+          <p className="text-sm text-gray-600">Type</p>
+          <p className="font-semibold">{type}</p>
         </div>
       </div>
       <div className="mb-4">
-        <p className="text-sm text-gray-600">Monthly Payment (estimate)</p>
-        <p className="font-semibold">$1497/Monthly</p>
+        <p className="text-sm text-gray-600">Description</p>
+        <p className="font-semibold">{description}</p>
       </div>
       <div className="flex gap-4">
-        <Button className="w-full bg-green-500 text-white hover:bg-green-600">Book Now</Button>
-        <Button className="w-full bg-green-500 text-white hover:bg-green-600">Offer Now</Button>
+        <Button
+          onClick={() => navigate('/checkout')}
+          className="w-full rounded-none bg-teal-500 text-white hover:bg-teal-600"
+        >
+          Book Now
+        </Button>
       </div>
     </div>
   );

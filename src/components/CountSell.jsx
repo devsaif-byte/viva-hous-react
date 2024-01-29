@@ -13,19 +13,19 @@ const CountSell = () => {
             A great plateform to buy, sell and rent your properties without any agent or commisions.
           </h3>
           <div className="grid gap-8 py-20 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <Card href="#" className="w-full rounded-none border-none bg-inherit text-center shadow-none">
+            <Card className="w-full rounded-none bg-inherit text-center shadow-none">
               <h5 className="text-5xl font-bold tracking-tight text-teal-400 dark:text-white">
                 {countOn && <CountUp start={0.0} end={10527} duration={3} />}+
               </h5>
               <p className="text-xl font-bold text-gray-600 dark:text-gray-400">Properties Sell</p>
             </Card>
-            <Card href="#" className="w-full rounded-none border-none bg-inherit text-center shadow-none">
+            <Card className="w-full rounded-none bg-inherit text-center shadow-none">
               <h5 className="text-5xl font-bold tracking-tight text-teal-400 dark:text-white">
                 {countOn && <CountUp start={0} end={62} duration={3} />}
               </h5>
               <p className="text-xl font-bold text-gray-600 dark:text-gray-400">Award Gained</p>
             </Card>
-            <Card href="#" className="w-full rounded-none border-none bg-inherit text-center shadow-none">
+            <Card className="w-full rounded-none bg-inherit text-center shadow-none">
               <h5 className="text-5xl font-bold tracking-tight text-teal-400 dark:text-white">
                 {countOn && <CountUp start={0} end={27} duration={3} />}+
               </h5>

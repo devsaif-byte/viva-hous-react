@@ -1,14 +1,13 @@
-import React from 'react';
 import Header from '../components/Header';
-import Property from './FeatureProperty';
 import HowItWorks from '../components/HowItWorks';
 import CountSell from '../components/CountSell';
+import Properties from './Properties';
 
 const Home = () => {
   return (
     <>
       <Header />
-      <Property />
+      <Properties maxItems={6} />
       <HowItWorks />
       <CountSell />
     </>
