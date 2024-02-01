@@ -1,9 +1,9 @@
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
-import { Badge, Button, Checkbox, Modal, Table } from 'flowbite-react';
+import { Button, Checkbox, Modal, Table } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { data } from 'autoprefixer';
+import Loader from '../../ui/Loader';
 
 export default function UserBookings() {
   const [openModal, setOpenModal] = useState(false);
@@ -14,13 +14,21 @@ export default function UserBookings() {
   }
 
   useEffect(() => {
-    const getProperties = async () => {
-      const response = await axios.get('http://localhost:3000/user/booking');
-      console.log(response.data);
-      setBookings(response.data);
-    };
-    getProperties();
+    try {
+      const getProperties = async () => {
+        const response = await axios.get('http://localhost:3000/user/booking');
+        // console.log(response.data);
+        setBookings(response.data);
+      };
+      getProperties();
+    } catch (err) {
+      console.error('Error fetching data:', err.message);
+    }
   }, []);
+
+  if (!bookings) {
+    return <Loader />;
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -40,30 +48,32 @@ export default function UserBookings() {
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {bookings.map((book) => (
-            <Table.Row key={book?.phone} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-              <Table.Cell className="p-4">
-                <Checkbox />
-              </Table.Cell>
-              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                {book.propertyReference}
-              </Table.Cell>
-              <Table.Cell>{book.name}</Table.Cell>
-              <Table.Cell>{book.address}</Table.Cell>
-              <Table.Cell>{book.email}</Table.Cell>
-              <Table.Cell>{book.phone}</Table.Cell>
+          {bookings &&
+            bookings.length &&
+            bookings.map((book) => (
+              <Table.Row key={book?.phone} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Cell className="p-4">
+                  <Checkbox />
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                  {book?.propertyReference}
+                </Table.Cell>
+                <Table.Cell>{book?.name}</Table.Cell>
+                <Table.Cell>{book?.address}</Table.Cell>
+                <Table.Cell>{book?.email}</Table.Cell>
+                <Table.Cell>{book?.phone}</Table.Cell>
 
-              <Table.Cell>
-                <Button
-                  color="failure"
-                  onClick={() => handleModal()}
-                  className="font-medium hover:underline dark:text-neutral-300"
-                >
-                  Delete
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          ))}
+                <Table.Cell>
+                  <Button
+                    color="failure"
+                    onClick={() => handleModal()}
+                    className="font-medium hover:underline dark:text-neutral-300"
+                  >
+                    Delete
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
         </Table.Body>
       </Table>
       <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>

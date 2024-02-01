@@ -14,7 +14,7 @@ const MakeAdmin = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:3000/newRegisteredUser/admin', { email });
+      await axios.put(`http://localhost:3000/newRegisteredUser/${email}`, { email });
       toast.success('User has been set to admin role!');
     } catch (err) {
       console.error(err);
