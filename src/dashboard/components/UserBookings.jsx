@@ -7,7 +7,7 @@ import { data } from 'autoprefixer';
 
 export default function UserBookings() {
   const [openModal, setOpenModal] = useState(false);
-  const [bookings, setBookings] = useState();
+  const [bookings, setBookings] = useState([]);
 
   function handleModal() {
     setOpenModal(true);
