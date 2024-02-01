@@ -1,92 +1,69 @@
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 import { Badge, Button, Checkbox, Modal, Table } from 'flowbite-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { data } from 'autoprefixer';
 
 export default function UserBookings() {
   const [openModal, setOpenModal] = useState(false);
+  const [bookings, setBookings] = useState();
 
   function handleModal() {
     setOpenModal(true);
   }
 
+  useEffect(() => {
+    const getProperties = async () => {
+      const response = await axios.get('http://localhost:3000/user/booking');
+      console.log(response.data);
+      setBookings(response.data);
+    };
+    getProperties();
+  }, []);
+
   return (
     <div className="overflow-x-auto">
-      <h1 className="p-8 text-3xl">All Orders</h1>
+      <h1 className="p-8 text-3xl">Your Bookings</h1>
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell className="p-4">
             <Checkbox />
           </Table.HeadCell>
-          <Table.HeadCell>Property name</Table.HeadCell>
-          <Table.HeadCell>Location</Table.HeadCell>
-          <Table.HeadCell>Type</Table.HeadCell>
-          <Table.HeadCell>Area</Table.HeadCell>
-          <Table.HeadCell>Status</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
+          <Table.HeadCell>Property Location</Table.HeadCell>
+          <Table.HeadCell>Issue</Table.HeadCell>
+          <Table.HeadCell>Address</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell>Phone</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="p-4">
-              <Checkbox />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              {'Apple MacBook Pro 17"'}
-            </Table.Cell>
-            <Table.Cell>Sliver</Table.Cell>
-            <Table.Cell>Apartment</Table.Cell>
-            <Table.Cell>5000sqf</Table.Cell>
-            <Table.Cell>
-              <Badge color="success" className="inline-block">
-                For Sale
-              </Badge>
-            </Table.Cell>
-            <Table.Cell>$2999</Table.Cell>
-            <Table.Cell>
-              <Button
-                color="failure"
-                onClick={() => handleModal()}
-                className="font-medium hover:underline dark:text-neutral-300"
-              >
-                Delete
-              </Button>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="p-4">
-              <Checkbox />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Microsoft Surface Pro
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="p-4">
-              <Checkbox />
-            </Table.Cell>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Magic Mouse 2
-            </Table.Cell>
-            <Table.Cell>Black</Table.Cell>
-            <Table.Cell>Accessories</Table.Cell>
-            <Table.Cell>$99</Table.Cell>
-            <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
+          {bookings.map((book) => (
+            <Table.Row key={book?.phone} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Cell className="p-4">
+                <Checkbox />
+              </Table.Cell>
+              <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                {book.propertyReference}
+              </Table.Cell>
+              <Table.Cell>{book.name}</Table.Cell>
+              <Table.Cell>{book.address}</Table.Cell>
+              <Table.Cell>{book.email}</Table.Cell>
+              <Table.Cell>{book.phone}</Table.Cell>
+
+              <Table.Cell>
+                <Button
+                  color="failure"
+                  onClick={() => handleModal()}
+                  className="font-medium hover:underline dark:text-neutral-300"
+                >
+                  Delete
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table>
       <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>

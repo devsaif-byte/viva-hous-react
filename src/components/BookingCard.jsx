@@ -2,8 +2,12 @@ import { Badge, Button } from 'flowbite-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BookingCard = ({ type, status, price, area, description }) => {
+const BookingCard = ({ type, status, price, area, description, propertyData }) => {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/checkout', { state: { propertyData } });
+  };
   return (
     <div className=" relative mx-auto min-w-80 border bg-white p-6 md:fixed">
       <div className="mb-4 flex items-center justify-between">
@@ -36,10 +40,7 @@ const BookingCard = ({ type, status, price, area, description }) => {
         <p className="font-semibold">{description}</p>
       </div>
       <div className="flex gap-4">
-        <Button
-          onClick={() => navigate('/checkout')}
-          className="w-full rounded-none bg-teal-500 text-white hover:bg-teal-600"
-        >
+        <Button onClick={handleClick} className="w-full rounded-none bg-teal-500 text-white hover:bg-teal-600">
           Book Now
         </Button>
       </div>

@@ -1,15 +1,13 @@
 import { Button, Label, TextInput } from 'flowbite-react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../contexts/authContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const Checkout = () => {
   const { currUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -17,6 +15,11 @@ const Checkout = () => {
     birthDate: '',
     address: '',
   });
+  const location = useLocation();
+  const [propertyData] = useState(location.state.propertyData || {});
+  useEffect(() => {}, [propertyData]);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -30,7 +33,29 @@ const Checkout = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:3000/user/booking', formData);
+
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+
+      // Set a property reference using location to FormData object
+      formDataToSend.append('propertyReference', propertyData.location);
+
+      // Set a custom message
+      formDataToSend.append('message', 'This user submitted a booking request for the property of this location.');
+
+      formDataToSend.append('name', formData.name);
+
+      const formDataObject = {};
+      formDataToSend.forEach((value, key) => {
+        formDataObject[key] = value;
+      });
+      const response = await axios.post('http://localhost:3000/user/booking', formDataObject, {
+        'Content-Type': 'multipart/form-data',
+      });
+      console.log('FormData to send:', formDataObject);
+
       setFormData({
         name: '',
         phone: '',
@@ -63,7 +88,7 @@ const Checkout = () => {
           <h3>User: {currUser.email || 'user-email'}</h3>
           <h3 className="italic">ID: {currUser.uid}</h3>
         </div>
-        <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-4" method="POST">
+        <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-4">
           <div>
             <div className="mb-2 block">
               <Label htmlFor="name" value="Name" />
@@ -100,7 +125,7 @@ const Checkout = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              id="email1"
+              id="email"
               type="email"
               placeholder="Type your email"
               required
