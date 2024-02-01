@@ -76,6 +76,7 @@ const PropertyDetails = () => {
               price={price}
               area={specification.area}
               description={description}
+              propertyData={data}
             />
           </div>
         </div>
