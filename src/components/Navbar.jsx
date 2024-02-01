@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react';
 import { signOutUser } from '../authentication/firebase';
 import { AuthContext } from '../contexts/authContext';
@@ -39,9 +39,9 @@ const Navigation = () => {
               <span className="block text-sm">{currUser?.displayName || 'Username unavailable'}</span>
               <span className="block truncate text-sm font-medium">{currUser?.email}</span>
             </Dropdown.Header>
-            <Link to="/dashboard">
+            <NavLink to="/dashboard">
               <Dropdown.Item as="li">Dashboard</Dropdown.Item>
-            </Link>
+            </NavLink>
             <Dropdown.Item as="li">Settings</Dropdown.Item>
 
             <Dropdown.Divider />

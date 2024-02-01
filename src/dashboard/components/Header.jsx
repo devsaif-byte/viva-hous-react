@@ -1,7 +1,7 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react';
+import { Avatar, Dropdown, Navbar, TextInput } from 'flowbite-react';
 import { useContext } from 'react';
 import { HiSearch } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
 export default function Header() {
   const { currUser, signOut, userType } = useContext(AuthContext);
@@ -9,11 +9,11 @@ export default function Header() {
   return (
     <Navbar fluid border>
       <Navbar.Brand>
-        <Link to="/">
+        <NavLink to="/">
           <span className="self-center whitespace-nowrap text-2xl font-bold text-teal-500 dark:text-white">
             VivaHaus
           </span>
-        </Link>
+        </NavLink>
       </Navbar.Brand>
       {currUser ? (
         <div className="flex md:order-2">
@@ -42,9 +42,9 @@ export default function Header() {
             </Dropdown.Header>
 
             {userType?.role === 'admin' && (
-              <Link to="makeAdmin">
-                <Dropdown.Item>Make someone admin</Dropdown.Item>
-              </Link>
+              <NavLink to="makeAdmin">
+                <Dropdown.Item as="li">Make someone admin</Dropdown.Item>
+              </NavLink>
             )}
             <Dropdown.Item>Your Account</Dropdown.Item>
             <Dropdown.Item>Settings</Dropdown.Item>
