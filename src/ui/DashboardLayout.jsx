@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext, AuthProvider } from '../contexts/authContext';
+import React from 'react';
+import { AuthProvider } from '../contexts/authContext';
 import { Outlet } from 'react-router-dom';
 import FooterSection from '../components/Footer';
 import { Toaster } from 'react-hot-toast';
