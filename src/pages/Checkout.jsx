@@ -15,6 +15,8 @@ const Checkout = () => {
     birthDate: '',
     address: '',
   });
+
+  const baseURL = import.meta.env.VITE_BASE_URL;
   const location = useLocation();
   const [propertyData] = useState(location.state.propertyData || {});
   useEffect(() => {}, [propertyData]);
@@ -51,7 +53,7 @@ const Checkout = () => {
       formDataToSend.forEach((value, key) => {
         formDataObject[key] = value;
       });
-      const response = await axios.post('http://localhost:3000/user/booking', formDataObject, {
+      const response = await axios.post(`${baseURL}/user/booking`, formDataObject, {
         'Content-Type': 'multipart/form-data',
       });
       console.log('FormData to send:', formDataObject);

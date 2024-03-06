@@ -58,11 +58,12 @@ export const signOutUser = async () =>
 
 // state synchronizer
 export const userStateObserver = (callback) => onAuthStateChanged(auth, callback);
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const sendUserToDb = async (email, password) => {
   try {
     const newUser = { email, password };
-    const response = await fetch('http://localhost:3000/newRegisteredUser', {
+    const response = await fetch(`${baseURL}/newRegisteredUser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

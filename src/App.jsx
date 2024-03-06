@@ -13,7 +13,7 @@ import Checkout from './pages/Checkout';
 import BookingSuccess from './pages/BookingSuccess';
 import DashboardLayout from './ui/DashboardLayout';
 import MakeAdmin from './dashboard/components/MakeAdmin';
-import UserBookings from './dashboard/components/userBookings';
+import UserBookings from './dashboard/components/UserBookings';
 import AdminRoute from './routes/AdminRoute';
 
 const router = createBrowserRouter([

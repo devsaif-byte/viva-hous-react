@@ -12,12 +12,12 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState('');
   const [userType, setUserType] = useState(false);
   const navigate = useNavigate();
-
+  const baseURL = import.meta.env.VITE_BASE_URL;
   // const email = currUser?.email
   // const email = 'admin@admin.com';
   useEffect(() => {
     if (currUser && currUser.email) {
-      fetch(`http://localhost:3000/newRegisteredUser/${encodeURIComponent(currUser.email)}`)
+      fetch(`${baseURL}/newRegisteredUser/${encodeURIComponent(currUser.email)}`)
         .then((res) => res.json())
         .then((data) => {
           setUserType(data);

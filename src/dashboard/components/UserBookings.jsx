@@ -1,9 +1,10 @@
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-
 import { Button, Checkbox, Modal, Table } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../../ui/Loader';
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 export default function UserBookings() {
   const [openModal, setOpenModal] = useState(false);
@@ -16,8 +17,7 @@ export default function UserBookings() {
   useEffect(() => {
     try {
       const getProperties = async () => {
-        const response = await axios.get('http://localhost:3000/user/booking');
-        // console.log(response.data);
+        const response = await axios.get(`${baseURL}/user/booking`);
         setBookings(response.data);
       };
       getProperties();

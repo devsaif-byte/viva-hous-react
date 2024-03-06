@@ -13,11 +13,12 @@ const MakeAdmin = () => {
   function handleChange(e) {
     setEmail(e.target.value);
   }
-
+  const baseURL = import.meta.env.VITE_BASE_URL;
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/newRegisteredUser/${email}`, { email });
+      // await axios.put(`http://localhost:3000/newRegisteredUser/${email}`, { email });
+      await axios.put(`${baseURL}/newRegisteredUser/${email}`, { email });
 
       toast.success('User has been set to admin role!');
     } catch (err) {

@@ -8,11 +8,12 @@ const Properties = ({ maxItems }) => {
   const [details, setDetails] = useState(db);
   const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => setCurrentPage(page);
-
+  const baseURL = import.meta.env.VITE_BASE_URL;
   useEffect(() => {
     async function sendData() {
       try {
-        await axios.post('http://localhost:3000/properties', { data: details });
+        await axios.post(`${baseURL}/properties`, { data: details });
+        // await axios.post('http://localhost:3000/properties', { data: details });
       } catch (error) {
         console.error('Error fetching properties:', error.message);
       }
