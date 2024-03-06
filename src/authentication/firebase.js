@@ -9,6 +9,7 @@ import { app } from './firebase.config';
 
 const auth = getAuth(app);
 // validation
+// With async await & try then catch callback
 export const createUser = async (email, password) => {
   if (!email && !password) return;
   // create new user
@@ -28,23 +29,22 @@ export const createUser = async (email, password) => {
     });
   console.log(result);
 };
-
+// With async await & try catch block
 export const signInUser = async (email, password) => {
-  if (!email || !password) return;
+  if (!email || !password) return null;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    return user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(`Error code: ${errorCode}, Error message: ${errorMessage}`);
 
-  const result = await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Login
-      const user = userCredential.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode);
-      console.error(errorMessage);
-    });
-
-  console.log(result);
+    if (errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
+      return 'Invalid email or password';
+    } else return 'An unexpected error occurred. Please try again later.';
+  }
 };
 
 // sign-out user
