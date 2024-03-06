@@ -32,7 +32,7 @@ export default function UserBookings() {
 
   return (
     <div className="overflow-x-auto">
-      <h1 className="p-8 text-3xl">Your Bookings</h1>
+      <h1 className="p-8 text-3xl">Bookings</h1>
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell className="p-4">

@@ -5,9 +5,12 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const MakeAdmin = () => {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
 
   function handleBlur(e) {
+    setEmail(e.target.value);
+  }
+  function handleChange(e) {
     setEmail(e.target.value);
   }
 
@@ -15,10 +18,11 @@ const MakeAdmin = () => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3000/newRegisteredUser/${email}`, { email });
+
       toast.success('User has been set to admin role!');
     } catch (err) {
       console.error(err);
-      toast.error('Somethings wrong while set to admin');
+      toast.error(err.response.data.message || 'Somethings wrong while set to admin');
     }
   }
 
@@ -32,6 +36,7 @@ const MakeAdmin = () => {
           id="email4"
           type="email"
           onBlur={handleBlur}
+          onChange={handleChange}
           value={email}
           icon={HiMail}
           placeholder="name@user.com"

@@ -12,14 +12,13 @@ const Properties = ({ maxItems }) => {
   useEffect(() => {
     async function sendData() {
       try {
-        const response = await axios.post('http://localhost:3000/properties', { data: details });
-        console.log(response);
+        await axios.post('http://localhost:3000/properties', { data: details });
       } catch (error) {
         console.error('Error fetching properties:', error.message);
       }
     }
     sendData();
-  }, []);
+  }, [details]);
 
   return (
     <div className="bg-neutral-50 py-20">

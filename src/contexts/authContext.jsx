@@ -13,17 +13,20 @@ const AuthProvider = ({ children }) => {
   const [userType, setUserType] = useState(false);
   const navigate = useNavigate();
 
+  // const email = currUser?.email
+  // const email = 'admin@admin.com';
   useEffect(() => {
-    fetch(`http://localhost:3000/newRegisteredUser/${currUser?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUserType(data.data);
-      });
+    if (currUser && currUser.email) {
+      fetch(`http://localhost:3000/newRegisteredUser/${encodeURIComponent(currUser.email)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserType(data);
+        });
+    }
   }, [currUser]);
 
   useEffect(() => {
     const unsubscribe = userStateObserver((user) => {
-      console.log('Observing the user:', user);
       setCurrUser(user);
       setIsLoading(false);
     });

@@ -1,11 +1,15 @@
 import { Avatar, Dropdown, Navbar, TextInput } from 'flowbite-react';
 import { useContext } from 'react';
 import { HiSearch } from 'react-icons/hi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
 export default function Header() {
   const { currUser, signOut, userType } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const handleMakeAdminClick = () => {
+    navigate('/dashboard/makeAdmin');
+  };
   return (
     <Navbar fluid border>
       <Navbar.Brand>
@@ -41,10 +45,10 @@ export default function Header() {
               <span className="block truncate text-sm font-medium">{currUser?.email}</span>
             </Dropdown.Header>
 
-            {userType?.role === 'admin' && (
-              <NavLink to="makeAdmin">
+            {userType?.admin === true && (
+              <div onClick={handleMakeAdminClick} to="/dashboard/makeAdmin">
                 <Dropdown.Item as="li">Make someone admin</Dropdown.Item>
-              </NavLink>
+              </div>
             )}
             <Dropdown.Item>Your Account</Dropdown.Item>
             <Dropdown.Item>Settings</Dropdown.Item>

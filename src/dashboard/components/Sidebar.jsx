@@ -19,7 +19,7 @@ export default function SidebarComponent() {
     <Sidebar aria-label="Sidebar with logo branding example" className="col-span-2 h-[90svh] w-full border-r">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          {userType?.role === 'admin' && (
+          {userType?.admin === true && (
             <>
               <Sidebar.Item as="li" icon={HiOutlineDocumentReport}>
                 Manage All Orders
@@ -33,11 +33,11 @@ export default function SidebarComponent() {
             </>
           )}
           <Sidebar.Item as="li" icon={HiInbox}>
-            My Properties
+            Properties
           </Sidebar.Item>
           <Link to="myBookings">
             <Sidebar.Item as="li" icon={HiUser}>
-              My Bookings
+              Bookings
             </Sidebar.Item>
           </Link>
           <Sidebar.Item as="li" icon={HiShoppingBag}>
